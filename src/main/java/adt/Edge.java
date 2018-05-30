@@ -1,7 +1,7 @@
 package adt;
 /*
- * Un objeto Arista modela una arista no dirigida que representa la relación de adyacencia
- * entre dos vértices. Por tanto una arista tiene dos vértices.
+ * Un objeto Arista modela una arista no dirigida que representa la relaciï¿½n de adyacencia
+ * entre dos vï¿½rtices. Por tanto una arista tiene dos vï¿½rtices.
  * Si el peso de una arista no se especifica, su valor es 1. Esto permite representar grafos uniformes.
 */
 public class Edge implements Comparable<Edge>{
@@ -11,8 +11,8 @@ public class Edge implements Comparable<Edge>{
 
     /**
      * Constructor de un objeto Arista uniforme
-     * @param vertice1. Extremo o vértice de la arista
-     * @param vertice2. Segundo extremo o vértice para formar la arista
+     /* @param vertice1. Extremo o vï¿½rtice de la arista
+     /* @param vertice2. Segundo extremo o vï¿½rtice para formar la arista
      **/
     public Edge(GraphNode vertice1, GraphNode vertice2)
     {
@@ -20,13 +20,13 @@ public class Edge implements Comparable<Edge>{
     }
 
     /**
-     * Se detalla la construcción de la arista. El vertice lexicograficamente
+     * Se detalla la construcciï¿½n de la arista. El vertice lexicograficamente
      * menor se representa en la parte superior del grafo (vertice1)
      * y el vertice cuya etiqueta es lexicograficamente mayor en la inferior (vertice2)
      *
-     * @param vertice1. Extremo o vértice de la arista
-     * @param vertice2. Segundo vértice para formar la arista
-     * @param peso. Define el coste de ir desde el vertice1 al vertice2 y viceversa(arista no dirigida)
+     /* @param vertice1. Extremo o vï¿½rtice de la arista
+     /* @param vertice2. Segundo vï¿½rtice para formar la arista
+     /* @param peso. Define el coste de ir desde el vertice1 al vertice2 y viceversa(arista no dirigida)
      **/
     public Edge(GraphNode vertice1, GraphNode vertice2, int peso)
     {
@@ -46,7 +46,7 @@ public class Edge implements Comparable<Edge>{
 
 
     /** 
-     * Dado un Vértice válido como parámentro de entrada
+     * Dado un Vï¿½rtice vï¿½lido como parï¿½mentro de entrada
      * se devuelve su adyecente. Estos se conectan mediante una arista
      *
      * @param actual
@@ -89,7 +89,7 @@ public class Edge implements Comparable<Edge>{
     /**
      * Modificador del atributo peso
      * 
-     * @param peso. Nuevo coste de la arista
+     /* @param peso. Nuevo coste de la arista
      **/
     public void setPeso(int peso)
     {
@@ -98,9 +98,9 @@ public class Edge implements Comparable<Edge>{
 
     /**
      * Comparamos el coste de esta arista con el coste
-     * de otra arista como parámentro de entrada llamada arista2
+     * de otra arista como parï¿½mentro de entrada llamada arista2
      * 
-     * @param arista2. Arista con la que comparamos nuestra arista actual
+     /* @param arista2. Arista con la que comparamos nuestra arista actual
      * @return int. Se devuelve 0 en caso de que ambas tengan el mismo peso
      **/
 	@Override
@@ -111,7 +111,7 @@ public class Edge implements Comparable<Edge>{
 
 
     /**
-     * @return String. Representación mediante una cadena de este objeto Arista
+     * @return String. Representaciï¿½n mediante una cadena de este objeto Arista
      **/
     public String toString()
     {
@@ -120,7 +120,7 @@ public class Edge implements Comparable<Edge>{
 
 
     /**
-     * @return int. Código hash para esta arista
+     * @return int. Cï¿½digo hash para esta arista
      **/
     public int hashCode()
     {
@@ -128,13 +128,13 @@ public class Edge implements Comparable<Edge>{
     }
     
     /**
-     * Se comparan el objeto Arista actual y otro que pasamos como parámetro de entrada
-     * Queremos saber si son idénticos. Para ello sus vértices definidos como atributos
-     * han de de ser iguales. Por lo que en el último if la responsabilidad se delega a
-     * al método equals de la clase Vertice.
+     * Se comparan el objeto Arista actual y otro que pasamos como parï¿½metro de entrada
+     * Queremos saber si son idï¿½nticos. Para ello sus vï¿½rtices definidos como atributos
+     * han de de ser iguales. Por lo que en el ï¿½ltimo if la responsabilidad se delega a
+     * al mï¿½todo equals de la clase Vertice.
      *
-     * @param objeto. Se comprueba si es de tipo Arista. Y si lo es, se compara e identifica.
-     * @return true. Si y solo si ambos objetos son idénticos(extremos iguales).
+     /* @param objeto. Se comprueba si es de tipo Arista. Y si lo es, se compara e identifica.
+     * @return true. Si y solo si ambos objetos son idï¿½nticos(extremos iguales).
      **/
     public boolean equals(Edge objeto)
     {

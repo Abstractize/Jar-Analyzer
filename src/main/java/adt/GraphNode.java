@@ -15,11 +15,7 @@ public class GraphNode {
 		this.tag = tag;
 		this.edges = new List<Edge>();
     }
-	 /**
-     * Adds an edge to the array of edges
-     * just if it doesn't exists in the array
-     * @param edge. Object to add
-     */
+
     public void insertarVecino(Edge edge)
     {
     	if( !this.edges.contains(edge))
@@ -38,7 +34,7 @@ public class GraphNode {
 
     /**
      * @param indice. Indica la posicion a extraer
-     * @return Arista. La arista apuntada por el índice en el array de lista vecindad
+     * @return Arista. La arista apuntada por el ï¿½ndice en el array de lista vecindad
      */
     public Edge getVecino(int index)
     {
@@ -46,7 +42,7 @@ public class GraphNode {
     }
 
     /*/**
-     * Se elimina una arista del array de lista vecindad mediante posición
+     * Se elimina una arista del array de lista vecindad mediante posiciï¿½n
      * @param indice. Indica la posicion a eliminar
      * @return Arista. La Arista que ha sido eliminada del array de lista vecindad
      
@@ -67,8 +63,8 @@ public class GraphNode {
     }
 
     /**
-     * @return int. Se devuelve el número de aristas incidentes (o vecinos) 
-     * tiene el vértice en el array de lista vecindad
+     * @return int. Se devuelve el nï¿½mero de aristas incidentes (o vecinos) 
+     * tiene el vï¿½rtice en el array de lista vecindad
      */
     public int getContarVecinos()
     {
@@ -86,8 +82,8 @@ public class GraphNode {
     /**
      * Se comprueba si vertice2 es un objeto de tipo Vertice
      * En tal caso podemos convertirlo de Object a Vertice
-     * Y por último evaluamos si contiene el mismo valor que el objeto vertice actual
-     * Para ello las etiquetas deben coincidir(son únicas para cada objeto Vertice) 
+     * Y por ï¿½ltimo evaluamos si contiene el mismo valor que el objeto vertice actual
+     * Para ello las etiquetas deben coincidir(son ï¿½nicas para cada objeto Vertice) 
      * @param vertice2. Objeto que comparamos con el vertice para 
      * evaluar si son el mismo objeto
      * @return true. Efectivamente son el mismo objeto
@@ -102,7 +98,7 @@ public class GraphNode {
     }
 
     /**
-     * @return String. Representación del vértice en una cadena
+     * @return String. Representaciï¿½n del vï¿½rtice en una cadena
      */
     public String toString()
     {
@@ -111,7 +107,7 @@ public class GraphNode {
 
 
     /**
-     * @return int. Código hash para este vértice
+     * @return int. Cï¿½digo hash para este vï¿½rtice
      **/
     public int hashCode()
     {

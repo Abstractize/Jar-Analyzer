@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="187.0" style="-fx-background-color: #D84343;">
+         <children>
+            <Pane prefHeight="37.0" prefWidth="210.0" style="-fx-background-color: #F5682B;" />
+            <JFXButton layoutX="32.0" layoutY="113.0" prefHeight="31.0" prefWidth="147.0" text="Choose a Jar" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="210.0" prefHeight="600.0" prefWidth="591.0">
+         <children>
+            <Pane prefHeight="37.0" prefWidth="591.0" style="-fx-background-color: #831E50;" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
