@@ -1,5 +1,6 @@
-package main.java;
+//package main.java;
 
+import gui.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,12 @@ public class Main extends Application {
         public void start(Stage primaryStage) throws Exception{
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/GUI.fxml"));
             primaryStage.setTitle("Jar Analyzer");
+
+            //test
+            //Controller controller = new Controller();
+            //controller.openDialog(primaryStage);
+
+
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
         }

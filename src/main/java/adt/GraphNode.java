@@ -1,4 +1,5 @@
-package main.java.adt;
+//package main.java.adt;
+package adt;
 
 /*
  * Every instantiate represent a Node or Vertices

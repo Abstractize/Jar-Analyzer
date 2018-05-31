@@ -1,4 +1,5 @@
-package main.java.adt;
+//package main.java.adt;
+package adt;
 /*
  * Un objeto Arista modela una arista no dirigida que representa la relaci�n de adyacencia
  * entre dos v�rtices. Por tanto una arista tiene dos v�rtices.
