@@ -7,119 +7,131 @@ package adt;
  * This doesn't allow duplicated nodes
  * The list contains the edges associated with the Node
 */
-public class GraphNode {
-	private List<Edge> edges;
-	private String tag;
-	
-	public GraphNode (String tag)
+public class GraphNode<T> {
+    private List<Edge> edges;
+    private String tag;
+    private T value;
+    /**
+     * Create the Node
+     * @param value: Object contained in the Node
+     * @param tag: Name of the object to be identified easily
+     */
+    public GraphNode (T value,String tag)
     {
-		this.tag = tag;
-		this.edges = new List<Edge>();
+        this.value = value;
+        this.tag = tag;
+        this.edges = new List<Edge>();
     }
-
-    public void insertarVecino(Edge edge)
+    /**
+     * Add the edge to the list
+     * @param edge: Object to add
+     */
+    public void addEdge(Edge edge)
     {
-    	if( !this.edges.contains(edge))
-    		this.edges.add(edge);
+        if( !this.edges.contains(edge))
+            this.edges.add(edge);
     }
 
     /**
      * If the edge is in the edge array
-     * @param edge. Object to evaluate
+     * @param edge: Object to evaluate
      * @return true.If the object is in the array
      */
-    public boolean contensNeighboor(Edge edge)
+    public boolean contensEdge(Edge edge)
     {
-    	return this.edges.contains(edge);
+        return this.edges.contains(edge);
     }
 
     /**
-     * @param indice. Indica la posicion a extraer
-     * @return Arista. La arista apuntada por el �ndice en el array de lista vecindad
+     * @param index: Position of the edge you need.
+     * @return Edge. Edge to in the position specified
      */
-    public Edge getVecino(int index)
+    public Edge getEdge(int index)
     {
-	return this.edges.getValue(index);
+        return this.edges.getValue(index);
     }
-
-    /*/**
-     * Se elimina una arista del array de lista vecindad mediante posici�n
-     * @param indice. Indica la posicion a eliminar
-     * @return Arista. La Arista que ha sido eliminada del array de lista vecindad
-     
-    public Edge eliminarVecino(int index)
-    {
-    	return this.edges.remove(index);
-    }
-    */
 
     /**
-     * Se elimina el objeto Arista del array de lista vecindad mediante
-     * el identificando la referencia del objeto Arista
-     * @param arista. indice el objeto Arista a eliminar
+     * Deletes an Edge
+     * @param index: Position to delete
+     * @return Edge. Edge deleted
      */
-    public void eliminarVecino(Edge arista)
+    public Edge deleteEdge(int index)
     {
-	this.edges.delete(arista);
+        Edge get = this.edges.getValue(index);
+        this.edges.delete(index);
+        return get;
     }
 
+
     /**
-     * @return int. Se devuelve el n�mero de aristas incidentes (o vecinos) 
-     * tiene el v�rtice en el array de lista vecindad
+     * Deletes an edge by refering the edge
+     * @param edge: Edge to delete
      */
-    public int getContarVecinos()
+    public void deleteEdge(Edge edge)
     {
-	return this.edges.getLength();
+        this.edges.delete(edge);
     }
 
     /**
-     * @return String. Devuelve el valor de la cadena etiqueta
+     * @return int. Returns the number of edges associated with the Node
      */
-    public String getEtiqueta()
+    public int getEdgesLength()
     {
-    	return this.tag;
+        return this.edges.getLength();
     }
 
     /**
-     * Se comprueba si vertice2 es un objeto de tipo Vertice
-     * En tal caso podemos convertirlo de Object a Vertice
-     * Y por �ltimo evaluamos si contiene el mismo valor que el objeto vertice actual
-     * Para ello las etiquetas deben coincidir(son �nicas para cada objeto Vertice) 
-     * @param vertice2. Objeto que comparamos con el vertice para 
-     * evaluar si son el mismo objeto
+     * @return String. Returns the tag of the Node
+     */
+    public String getTag()
+    {
+        return this.tag;
+    }
+
+    /**
+     * Verifies if the object vertice2 is a GraphNode, in case it isn't returns false
      * @return true. Efectivamente son el mismo objeto
      */
     public boolean equals(Object vertice2)
     {
-    	if( !(vertice2 instanceof GraphNode))
-    		return false;
+        if( !(vertice2 instanceof GraphNode))
+            return false;
 
-    	GraphNode v = (GraphNode) vertice2;
-    	return this.tag.equals(v.tag);
+        GraphNode<T> v = (GraphNode) vertice2;
+        return this.tag.equals(v.tag);
     }
 
     /**
-     * @return String. Representaci�n del v�rtice en una cadena
+     * @return String. GraphNode in a String Value
      */
     public String toString()
     {
-    	return "Vertice: " + this.tag;
+        return "Vertice: " + this.tag;
     }
 
 
     /**
-     * @return int. C�digo hash para este v�rtice
+     * @return int. Hash Code for the Node
      **/
     public int hashCode()
     {
-    	return this.getEtiqueta().hashCode();
+        return this.getTag().hashCode();
     }
-    
+
     /**
-     * @return ArrayList<Arista>. Copia del array de lista vecindad
-     */ 
-    public List<Edge> getVecinos()
+     * @return List<Edge>. return List of the edges
+     */
+    public List<Edge> getEdges()
     {
-    	return this.edges;
+        return this.edges;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
     }
 }

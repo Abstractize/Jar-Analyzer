@@ -14,7 +14,7 @@ public class List<T> {
 	/**
 
 	 * Verifies if the List is empty.
-	 * 
+	 *
 
 	 */
 	//Validador de Lista Vacia
@@ -57,10 +57,24 @@ public class List<T> {
 				aux = aux.getNext();
 			}
 		}
-	return flag;
+		return flag;
 	}
-	/**
+	public void delete(int pos) {//Obtener valor por referencia
+		if(pos >= 0 && pos < length) {
+			if (pos == 0){
+				head = head.getNext();
+			}else {
+				ListNode<T> aux = head;
+				for (int i = 0; i < pos; i++) {
+					aux = aux.getNext();
+				}
+				ListNode<T> next = aux.getNext().getNext();
+				aux.setNext(next);
+			}
+		}
+	}
 
+	/**
 	 * Deletes an element in the list
 	 * @param reference: element to delete.
 	 */
@@ -124,5 +138,5 @@ public class List<T> {
 	public void setLength(int length) {
 		this.length = length;
 	}
-	
+
 }
