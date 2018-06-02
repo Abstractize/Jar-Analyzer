@@ -2,6 +2,7 @@ package gui;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Input;
 
 import java.awt.*;
 import java.io.File;
@@ -12,17 +13,17 @@ import java.util.logging.Logger;
 public class Controller {
 
     private Desktop desktop = Desktop.getDesktop();
-
     private FileChooser fileChooser = new FileChooser();
-
     private Stage stage;
+
+    private Input DisplayGraph;
 
     private boolean fileBool = true;
 
     /**
      * Singleton for openDialog
      */
-    public void openDialog(){
+    public void openDialog() throws IOException{
         if (fileBool){
             openDialogAux();
         }
@@ -31,13 +32,15 @@ public class Controller {
     /**
      * Open windows explorer to search the path file.
      */
-    private void openDialogAux(){
+    private void openDialogAux() throws IOException{
         fileBool = false;
         configureFileChooser(fileChooser);
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
-            openFile(file);
-            getPathFile(file);
+            //openFile(file);
+            System.out.println(getPathFile(file));
+            DisplayGraph = new Input(getPathFile(file));
+
         }
 
         fileBool = true;

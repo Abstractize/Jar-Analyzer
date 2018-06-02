@@ -122,6 +122,12 @@ public class List<T> {
 			return null;
 		}
 	}
+	public void print(){
+		for (int i = 0; i<this.length;i++){
+			System.out.println(this.getValue(i));
+		}
+
+	}
 	//Getters y Setters
 	public ListNode<T> getHead() {
 		return head;
