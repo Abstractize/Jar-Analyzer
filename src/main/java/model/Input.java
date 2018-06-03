@@ -15,6 +15,7 @@ public class Input extends JarFile{
 
 	private String Name;
 	private List<Atribute> Jars = new List<Atribute>();
+	private List<JarEntry> Classes = new List<JarEntry>();
 	private Graph<JAR> Graph;
 	private Manifest Manifest;
 	private JarEntry Classpath;
@@ -35,12 +36,15 @@ public class Input extends JarFile{
 		Classpath = this.getJarEntry(".classpath");
 		System.out.println(Classpath.getName() +" founded");
 		//Sets Classpath jars
-		System.out.println(Classpath.getAttributes());
-		System.out.println(Classpath.getCertificates());
-		System.out.println(Classpath.getCodeSigners());
-		/*for (Atribute atr : Classpath.getAttributes()){
-			Jars.add(Classpath.getAttributes());
-		}*/
+
+		//Get classes
+		for (Enumeration<JarEntry> e = this.entries(); e.hasMoreElements();){
+			JarEntry evaluate = e.nextElement();
+			if (evaluate.getName().contains(".class")){
+				Classes.add(evaluate);
+			}
+		}
+		Classes.print();
 		// TODO Auto-generated constructor stub
 	}
 	public void toGraph(){//Search about jar Entries
