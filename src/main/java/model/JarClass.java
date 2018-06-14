@@ -6,7 +6,10 @@ public class JarClass {
 	private String Name;
 	private List<Atribute> Atribute;
 	private List<Method> Methods;
-	
+
+	public JarClass(String name){
+		this.setName(name);
+	}
 	//Getters and Setters
 	public String getName() {
 		return Name;
