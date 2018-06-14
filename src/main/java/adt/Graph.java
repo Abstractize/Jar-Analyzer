@@ -7,16 +7,16 @@ import java.util.*;
  * @author Gabriel Abarca Aguilar
  */
 public class Graph<T> {
-    private HashMap<String, GraphNode<T>> vertices;
-    private HashMap<Integer, Edge<T>> aristas;
+    private List<GraphNode<T>> vertices;
+    private List<Edge<T>> aristas;
 
     /**
      * Construcción de un grafo vacío
      **/
     public Graph()
     {
-        this.vertices = new HashMap<String, GraphNode<T>>();
-        this.aristas = new HashMap<Integer, Edge<T>>();
+        this.vertices = new List<GraphNode<T>>();
+        this.aristas = new List<Edge<T>>();
     }
 
 
@@ -28,13 +28,13 @@ public class Graph<T> {
      **/
     public Graph(List<GraphNode<T>> vertices)
     {
-        this.vertices = new HashMap<String, GraphNode<T>>();
-        this.aristas = new HashMap<Integer, Edge<T>>();
+        this.vertices = new List<GraphNode<T>>();
+        this.aristas = new List<Edge<T>>();
 
         for(int i = 0; i<vertices.getLength();i++)
         {
             GraphNode<T> v = vertices.getValue(i);
-            this.vertices.put(v.getTag() , v);
+            this.vertices.add(v);
         }
 
     }
@@ -73,13 +73,10 @@ public class Graph<T> {
             return false;
 
         Edge<T> arista = new Edge<T>(v1, v2, peso);
-
-        if(aristas.containsKey(arista.hashCode())) //arista ya está en el grafo?
-            return false;
-        else if( v1.contensEdge(arista) || v2.contensEdge(arista)) //arista ya une a v1 o v2?
+        if( v1.contensEdge(arista) || v2.contensEdge(arista)) //arista ya une a v1 o v2?
             return false;
 
-        aristas.put(arista.hashCode(), arista);
+        aristas.add(arista);
         v1.addEdge(arista);
         return true;
     }
@@ -92,7 +89,7 @@ public class Graph<T> {
     {
         if(arista.getTail() == null || arista.getHead() == null)
             return false;
-        return this.aristas.containsKey(arista.hashCode());
+        return this.aristas.contains(arista);
     }
 
 
@@ -103,10 +100,10 @@ public class Graph<T> {
      *@param arista: Arista que se quiere eliminar del grafo
      *@return Arista. Arista borrada del grafo
      */
-    public Edge<T> eliminarArista(Edge<T> arista)
+    public void eliminarArista(Edge<T> arista)
     {
         arista.getTail().deleteEdge(arista);
-        return this.aristas.remove(arista.hashCode());
+        this.aristas.delete(arista);
     }
 
     /**
@@ -118,76 +115,52 @@ public class Graph<T> {
      **/
     public boolean contieneElVertice(GraphNode<T> vertice)
     {
-        return (this.vertices.get(vertice.getTag()) != null);
+        return (this.vertices.contains(vertice));
     }
-
     /**
-     * @param etiqueta: Distintivo de cada vértice
-     * @return Vertice. Devuelve el vértice asociado a la etiqueta
+     * Nos devuelve true si encuentra el vértice que se pasa
+     * como parámetro de entrada
+     *
+     * @param reference: Nombre del vértice que buscamos
+     * @return boolean. True si el vertice se encuentra.
      **/
-    public GraphNode<T> getVertice(String etiqueta)
+    public boolean contieneElVertice(String reference)
     {
-        return this.vertices.get(etiqueta);
+        for (int i = 0; i < vertices.getLength(); i++){
+            if (reference == vertices.getValue(i).getTag()){
+                return true;
+            }
+        }
+        return false;
     }
-
+    public GraphNode<T> getVertice (String str) {
+        ListNode<adt.GraphNode<T>> aux = vertices.getHead();
+        GraphNode<T> flag= null;
+        while (aux != null && flag == null){
+            if (str == aux.getValue().getTag()){
+                flag = aux.getValue();
+            }
+            else{
+                aux = aux.getNext();
+            }
+        }
+        return flag;
+    }
     /**
      * Inserta un nuevo vértice. Si el vértice existe previamente entonces
      * se consulta si puede ser sobreescrito. En tal caso se elimina las adyacencias
      * existentes.
      *
      * @param vertice: Vértice a insertar
-     * @param sobreescribeVertice: Permiso para sobreescribir el vértice
      * @return boolean. Verdarero si el vértice se inserta con éxito
      **/
-    public boolean insertarVertice(GraphNode<T> vertice, boolean sobreescribeVertice)
+    public boolean insertarVertice(GraphNode<T> vertice)
     {
-        GraphNode<T> actual = this.vertices.get(vertice.getTag());
-        if(actual != null) //existía previamente?
-        {
-            if(!sobreescribeVertice)
-                return false;
-
-            while(actual.getEdgesLength() >= 0)
-                this.eliminarArista(actual.getEdge(0));
-
-        }
-
-        vertices.put(vertice.getTag(), vertice);
+        vertices.add(vertice);
         return true;
     }
-
-    /**
-     * Elimina el vértice especificado mediante la etiqueta
-     * distintiva por parámetro de entrada. Al eliminar el vértice
-     * se elimina también todas las adyancencias que poseía este.
-     *
-     * @param etiqueta: Cadena distintiva de cada vértice
-     * @return Vertice. Devuelve el vértice eliminado
-     **/
-    public GraphNode<T> eliminarVertice(String etiqueta)
-    {
-        GraphNode<T> vertice = vertices.remove(etiqueta);
-
-        while(vertice.getEdgesLength() >= 0)
-            this.eliminarArista(vertice.getEdge(0));
-
-        return vertice;
+    public List<GraphNode<T>> getVertices(){
+        return this.vertices;
     }
 
-    /**
-     * @return Set<String>. Devuelve las etiquetas, que son el distintivo
-     * único de cada objeto Vertice en el Grafo
-     **/
-    public Set<String> verticeKeys()
-    {
-        return this.vertices.keySet();
-    }
-
-    /**
-     * @return Set<Arista>. Devuelve todos los objetos Arista del Grafo
-     **/
-    public Set<Edge<T>> getAristas()
-    {
-        return new HashSet<Edge<T>>(this.aristas.values());
-    }
 }
