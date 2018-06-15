@@ -11,11 +11,24 @@ public class List<T> {
 	private ListNode<T> head;
 	private int length;
 	//Constructor
+
+
+	public List(){
+
+
+	}
+
+
+	public List(T value1, T value2) {
+
+		add(value1);
+		add(value2);
+
+	}
+
 	/**
-
 	 * Verifies if the List is empty.
-	 * 
-
+	 *
 	 */
 	//Validador de Lista Vacia
 	public boolean empty(){
@@ -23,7 +36,6 @@ public class List<T> {
 	}
 	//Metodos
 	/**
-
 	 * Adds values to the list.
 	 * @param value: value to add.
 	 */
@@ -42,7 +54,6 @@ public class List<T> {
 		length++;
 	}
 	/**
-
 	 * Searches an element in the list
 	 * @param reference: element to search.
 	 */
@@ -57,10 +68,24 @@ public class List<T> {
 				aux = aux.getNext();
 			}
 		}
-	return flag;
+		return flag;
 	}
-	/**
+	public void delete(int pos) {//Obtener valor por referencia
+		if(pos >= 0 && pos < length) {
+			if (pos == 0){
+				head = head.getNext();
+			}else {
+				ListNode<T> aux = head;
+				for (int i = 0; i < pos; i++) {
+					aux = aux.getNext();
+				}
+				ListNode<T> next = aux.getNext().getNext();
+				aux.setNext(next);
+			}
+		}
+	}
 
+	/**
 	 * Deletes an element in the list
 	 * @param reference: element to delete.
 	 */
@@ -81,7 +106,6 @@ public class List<T> {
 		}
 	}
 	/**
-
 	 * Erases the list
 	 */
 	public void erase(){//Elimina la lista
@@ -89,7 +113,6 @@ public class List<T> {
 		length = 0;
 	}
 	/**
-
 	 * Searches an element in the list by the position.
 	 * @param pos: position of the element.
 	 */
@@ -108,6 +131,12 @@ public class List<T> {
 			return null;
 		}
 	}
+	public void print(){
+		for (int i = 0; i<this.length;i++){
+			System.out.println(this.getValue(i));
+		}
+
+	}
 	//Getters y Setters
 	public ListNode<T> getHead() {
 		return head;
@@ -124,5 +153,5 @@ public class List<T> {
 	public void setLength(int length) {
 		this.length = length;
 	}
-	
+
 }
