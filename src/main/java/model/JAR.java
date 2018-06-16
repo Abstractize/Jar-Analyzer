@@ -13,6 +13,10 @@ public class JAR {
 		this.Diagram = Graph;
 		this.manifest = man;
 	}
+	public JAR(String name, Graph<JarClass> Graph){
+		this.Name = name;
+		this.Diagram = Graph;
+	}
 	//Getters and Setters
 	public String getName() {
 		return Name;

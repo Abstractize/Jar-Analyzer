@@ -4,15 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.jar.Attributes;
+import com.jcabi.manifests.Manifests;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 
 import adt.Graph;
 import adt.GraphNode;
 import adt.List;
+import com.sun.nio.zipfs.JarFileSystemProvider;
+import sun.tools.jar.Manifest;
 
 
 public class Input{
@@ -28,9 +28,9 @@ public class Input{
 		Graph<JarClass> Classes = new Graph<JarClass>();
 		//Obtenemos el primer JAR y lo colocamos en el Grafo
 		main = createJAR(fileURL);
-		this.Jars.insertarVertice(new GraphNode<JAR>(main,main.getName()),true);
+		this.Jars.insertarVertice(new GraphNode<JAR>(main,main.getName()));
 		//Insertamos en el Grafo las dependecias y creamos una arista por cada dependecia
-		relateJAR(main);
+		//relateJAR(main);
 
 
 
@@ -44,14 +44,6 @@ public class Input{
 			Object key = it.next();
 			System.out.println("Clave: " + key + " -> Valor: " + file.getManifest().getEntries().get(key));
 		}
-		/*for (int i = file.getManifest().getEntries().size(); i > 0 ; i--){
-			System.out.println(file.getManifest().getEntries()[i]);
-		}*/
-		System.out.println(file.getManifest().getEntries().values());
-		/*for (Map man = file.getManifest().getEntries(); man.isEmpty();){
-			System.out.println(man.values());
-			man.clear();
-		}*/
 	}
 	public void toGraph(){//Search about jar Entries
 		
@@ -64,15 +56,45 @@ public class Input{
 		for (Enumeration<JarEntry> e = file.entries(); e.hasMoreElements();){
 			JarEntry evaluate = e.nextElement();
 			if (evaluate.getName().endsWith(".class")){
-				//Crea el grafo de Clases
-				JarClass aux = new JarClass(evaluate.getName().replace(".class",""));
-				//JarClass aux = new JarClass(evaluate.getName());
-				System.out.println("clase: "+aux.getName());
-				Classes.insertarVertice(new GraphNode<JarClass>(aux,aux.getName()),false);
-				//Grafo sin aristas
+				if(isDependencie(evaluate.getName())){
+					JarClass aux = new JarClass(evaluate.getName().replace(".class",""));
+					String[] container = evaluate.getName().split("/");
+					String name = container[2];
+					System.out.println(name);
+					System.out.println(Jars.contieneElVertice(name));
+					if (Jars.contieneElVertice(name)){
+						GraphNode<JAR> vertice = Jars.getVertice(name);
+						vertice.getValue().getDiagram().insertarVertice(new GraphNode<JarClass>(aux,aux.getName()));
+					}else{
+						Graph<JarClass> dClasses = new Graph<JarClass>();
+						dClasses.insertarVertice(new GraphNode<JarClass>(aux,aux.getName()));
+						JAR dependencie = new JAR(name,dClasses);
+						Jars.insertarVertice(new GraphNode<JAR>(dependencie,dependencie.getName()));
+						System.out.println("Insertada dependencia "+Jars.getVertice(dependencie.getName()).getTag());
+						System.out.println(Jars.getVertices().getLength());
+
+
+					}
+				}else{
+					//Crea el grafo de Clases
+					JarClass aux = new JarClass(evaluate.getName().replace(".class",""));
+					//JarClass aux = new JarClass(evaluate.getName());
+					System.out.println("clase: "+aux.getName());
+					Classes.insertarVertice(new GraphNode<JarClass>(aux,aux.getName()));
+					//Grafo sin aristas
+				}
 			}
 		}
-		return new JAR(file.getName(),Classes,file.getManifest());
+		return new JAR(file.getName(),Classes);
+	}
+	public boolean isDependencie(String url){
+		String[] container = url.split("/");
+		System.out.println(container.length);
+		if (container.length > 2 ){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	//Getters 
 	public Graph getGraph() {
