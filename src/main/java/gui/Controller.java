@@ -16,9 +16,12 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -39,13 +42,43 @@ public class Controller {
 
     private Stage stage;
 
+
     private boolean fileBool = true;
+
+    private Scene scene;
+
+    public void setScene(Scene scene) { this.scene = scene; }
 
 
     @FXML
     private Canvas graphContent;
     @FXML
     private HBox progressCanvas;
+    @FXML
+    private HBox realCanvas;
+
+    private void dT(){
+
+        PannableCanvas canvas = new PannableCanvas();
+        canvas.setTranslateX(100);
+        canvas.setTranslateY(100);
+
+        javafx.scene.shape.Rectangle rect1 = new Rectangle(100,100);
+        rect1.setTranslateX(450);
+        rect1.setTranslateY(450);
+        rect1.setStroke(Color.BLUE);
+        rect1.setFill(Color.BLUE.deriveColor(1, 1, 1, 0.5));
+
+        canvas.getChildren().add(rect1);
+
+        SceneGestures sceneGestures = new SceneGestures(canvas);
+        scene.addEventFilter( MouseEvent.MOUSE_PRESSED, sceneGestures.getOnMousePressedEventHandler());
+        scene.addEventFilter( MouseEvent.MOUSE_DRAGGED, sceneGestures.getOnMouseDraggedEventHandler());
+        scene.addEventFilter( ScrollEvent.ANY, sceneGestures.getOnScrollEventHandler());
+
+        realCanvas.getChildren().add(canvas);
+
+    }
 
     private void wT() {
         final Slider slider = new Slider();
@@ -139,6 +172,7 @@ public class Controller {
         GraphicsContext gc = graphContent.getGraphicsContext2D();
         gc.clearRect(0,0,graphContent.getWidth(),graphContent.getHeight());
         wT();
+        //dT();
     }
 
     @FXML
@@ -246,7 +280,12 @@ public class Controller {
         // 		String repesentationType= "circo";
 
         //File out = new File("/tmp/out"+gv.getImageDpi()+"."+ type);   // Linux
-        File out = new File("c:/temp/graphviz-java-api/out." + type);    // Windows
+
+        boolean temp = new File("c:/temp/graphviz-java-api/out." + type).mkdirs();  // Windows
+        if (!temp)
+            System.out.println("Failed creating the new directory");
+
+        File out = new File("c:/temp/graphviz-java-api/out." + type);
         gv.writeGraphToFile( gv.getGraph(gv.getDotSource(), type, repesentationType), out );
     }
 
