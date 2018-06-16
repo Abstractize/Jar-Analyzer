@@ -9,6 +9,7 @@ import java.util.*;
 public class Graph<T> {
     private List<GraphNode<T>> vertices;
     private List<Edge<T>> aristas;
+    private List<List<String>> stringList = new List<List<String>>();
 
     /**
      * Construcción de un grafo vacío
@@ -78,7 +79,15 @@ public class Graph<T> {
 
         aristas.add(arista);
         v1.addEdge(arista);
+        stringList.add(
+
+                new List<String>(v1.getTag(),v2.getTag())
+        );
         return true;
+    }
+
+    public List<List<String>> getStringList() {
+        return stringList;
     }
 
     /**

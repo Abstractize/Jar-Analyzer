@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
-import com.jcabi.manifests.Manifests;
+//import com.jcabi.manifests.Manifests;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 

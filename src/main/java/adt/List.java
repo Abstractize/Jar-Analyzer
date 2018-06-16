@@ -11,6 +11,18 @@ public class List<T> {
 	private ListNode<T> head;
 	private int length;
 	//Constructor
+	public List(){
+
+
+	}
+
+
+	public List(T value1, T value2) {
+
+		add(value1);
+		add(value2);
+
+	}
 	/**
 
 	 * Verifies if the List is empty.
