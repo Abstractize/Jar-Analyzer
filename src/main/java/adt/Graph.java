@@ -9,6 +9,15 @@ import java.util.*;
 public class Graph<T> {
     private List<GraphNode<T>> vertices;
     private List<Edge<T>> aristas;
+
+    public List<Edge<T>> getAristas() {
+        return aristas;
+    }
+
+    public void setAristas(List<Edge<T>> aristas) {
+        this.aristas = aristas;
+    }
+
     private List<List<String>> stringList = new List<List<String>>();
 
     /**
@@ -76,18 +85,27 @@ public class Graph<T> {
         Edge<T> arista = new Edge<T>(v1, v2, peso);
         if( v1.contensEdge(arista) || v2.contensEdge(arista)) //arista ya une a v1 o v2?
             return false;
+        for (int i = 0; i<this.aristas.getLength(); i++){
+            System.out.println("Verficando arista repetida");
+            if (this.aristas.getValue(i).getHead()==v1 && this.aristas.getValue(i).getTail()==v2){
+                System.out.println("Arista repetida");
+                return false;
+            }
+        }
 
         aristas.add(arista);
         v1.addEdge(arista);
         stringList.add(
-
-                new List<String>(v1.getTag(),v2.getTag())
+                    new List<String>(v1.getTag(),v2.getTag())
         );
         return true;
     }
 
     public List<List<String>> getStringList() {
         return stringList;
+    }
+    public void setStringList(List<List<String>> newList) {
+        stringList = newList;
     }
 
     /**

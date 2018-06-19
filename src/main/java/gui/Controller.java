@@ -1,25 +1,31 @@
 package gui;
 
+import adt.Edge;
 import adt.Graph;
 import adt.GraphNode;
 import adt.List;
+import javafx.animation.ScaleTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import model.Input;
+import model.JAR;
 
 import java.awt.*;
 import java.io.File;
@@ -42,6 +48,10 @@ public class Controller {
 
     public void setScene(Scene scene) { this.scene = scene; }
 
+    private Graph graph;
+
+    private String pathFile;
+
 
     @FXML
     private Canvas graphContent;
@@ -49,6 +59,10 @@ public class Controller {
     private HBox progressCanvas;
     @FXML
     private HBox realCanvas;
+    @FXML
+    private Canvas rankingCanvas;
+    @FXML
+    private ScrollBar scrollBar;
 
 //    private void dT(){
 //
@@ -72,6 +86,14 @@ public class Controller {
 //        realCanvas.getChildren().add(canvas);
 //
 //    }
+
+    public Graph getGraph() {
+        return graph;
+    }
+
+    public void setGraph(Graph graph) {
+        this.graph = graph;
+    }
 
     private void wT() {
         final Slider slider = new Slider();
@@ -109,10 +131,17 @@ public class Controller {
         File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             openFile(file);
-            getPathFile(file);
+            //getPathFile(file);
+            setpathFile(getPathFile(file));
+
         }
 
         fileBool = true;
+    }
+
+    private void setpathFile(String path){
+
+        this.pathFile = path;
     }
 
     /**
@@ -175,10 +204,11 @@ public class Controller {
         Image img = new Image("file:///C:/temp/graphviz-java-api/out.png");
         gc.drawImage(img,0,0,560,531);
 
+
     }
 
     @FXML
-    private void makeGraph(){
+    private void makeGraph() throws IOException {
 
         Graph<Integer> aGra = new Graph<Integer>();
         GraphNode<Integer> n1 = new GraphNode<Integer>(1, "ichi");
@@ -239,15 +269,20 @@ public class Controller {
         //System.out.println(aGra.getEdgesList());
         //System.out.println(aGra.getAristas());
 
+        //Graph grapho = getGraph();
+
         GraphViz gv = new GraphViz();
         gv.addln(gv.start_graph());
 
-        List<List<String>> stringMatrix = aGra.getStringList();
+        Input input = new Input(pathFile);
+
+        List<List<String>> stringMatrix = input.getGraph().getStringList();
+        //List<String> already = new List<List<String>>();
 
         for (int i = 0; i<stringMatrix.getLength(); i++){
             for(int j = 0; j<stringMatrix.getValue(i).getLength()-1;j++){
-
-                gv.addln(stringMatrix.getValue(i).getValue(j)+" -> "+stringMatrix.getValue(i).getValue(j+1)+";");
+                String toAdd = stringMatrix.getValue(i).getValue(j)+" -> "+stringMatrix.getValue(i).getValue(j+1)+";";
+                gv.addln(toAdd);
             }
         }
 
@@ -282,6 +317,33 @@ public class Controller {
         File out = new File("c:/temp/graphviz-java-api/out." + type);
         gv.writeGraphToFile( gv.getGraph(gv.getDotSource(), type, repesentationType), out );
     }
+
+    @FXML
+    private void showRanks() throws IOException {
+
+        GraphicsContext gc = rankingCanvas.getGraphicsContext2D();
+        gc.clearRect(0,0,rankingCanvas.getWidth(),rankingCanvas.getHeight());
+
+        String ranking = "Ranking Dependencias";
+        gc.setFill(Color.CRIMSON);
+        gc.setFont(new Font(20));
+        gc.fillText(ranking,10,30);
+
+        Input input = new Input(pathFile);
+
+        List<Edge<JAR>> lista = input.getGraph().getAristas();
+
+        for (int e=0 ; e<lista.getLength();e++){
+            System.out.println(lista.getValue(e).getHead() + ""+ lista.getValue(e).getNum());
+            gc.setFill(Color.BLUEVIOLET);
+            gc.setFont(new Font(15));
+            gc.fillText(e+1+". "+lista.getValue(e).getHead(),10,100+ (e*20));
+
+        }
+
+
+    }
+
 
 
 

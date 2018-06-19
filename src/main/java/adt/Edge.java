@@ -1,5 +1,8 @@
 //package main.java.adt;
 package adt;
+
+import model.JAR;
+
 /*
  * Un objeto Arista modela una arista no dirigida que representa la relaciï¿½n de adyacencia
  * entre dos vï¿½rtices. Por tanto una arista tiene dos vï¿½rtices.
@@ -9,6 +12,7 @@ public class Edge<T> implements Comparable<Edge<T>>{
 
     private GraphNode<T> Tail , Head;
     private int weight;
+    private int num = 1;
 
     /**
      * Constructor de un objeto Arista uniforme
@@ -34,6 +38,11 @@ public class Edge<T> implements Comparable<Edge<T>>{
         this.Head = vertice2;
         this.weight = peso;
     }
+
+    /*private GraphNode<T> getTail(){
+
+        return  this.Tail;
+    }*/
 
 
     /**
@@ -138,4 +147,19 @@ public class Edge<T> implements Comparable<Edge<T>>{
 
         return false;
     }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
+
+    public void setTail(GraphNode<T> tail) {
+        Tail = tail;
+
+    }
+
+
 }
